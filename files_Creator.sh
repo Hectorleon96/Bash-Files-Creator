@@ -15,13 +15,6 @@ error() {
 file_number=$3
 extention=$2
 
-file_exist() {
-
-    if [[ "find ./ -name $1.$extention" ]]; then
-        echo -e "Caution: one or some files is already exist\nthe new files was created correctly"
-    fi
-}
-
 createFiles() {
     
     for (( i = 1; i <= $file_number; i++ )); do
@@ -35,7 +28,6 @@ createFiles() {
 
 finish() {
     echo "Done!"
-    ls -l . | tail -n +2 | cut -d " " -f 1,9
 }
 
 if [ $# -ne 4 ]; then # parameters
@@ -48,7 +40,6 @@ fi
 
 if [[ -d $4 ]]; then
     cd ./$4 
-    file_exist
     createFiles
     finish
 
@@ -59,7 +50,6 @@ if [[ -d $4 ]]; then
 
         if [[ $createDic == "" ]]; then
             echo "Folder name is empty, was created as 'newFolder'"
-            file_exist
             mkdir newFolder && cd newFolder
             createFiles
             finish
@@ -67,7 +57,6 @@ if [[ -d $4 ]]; then
             error "Error: the directory was not created"
 
         elif [[ $createDic == [sS] ]]; then
-            file_exist
             mkdir $4 && cd ./$4
             createFiles
             finish
